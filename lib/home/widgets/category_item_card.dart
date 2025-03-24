@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:textile/home/models/category_item_model.dart';
 import 'package:textile/home/screens/item_details_screen.dart';
 import 'package:textile/modules/shared/widgets/colors.dart';
@@ -12,7 +13,7 @@ class CategoryItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        rightSlideTransition(context, ItemDetailsScreen(item: item));
+        fadeTransition(context, ItemDetailsScreen(item: item));
       },
       child: Container(
         clipBehavior: Clip.hardEdge,
@@ -29,32 +30,52 @@ class CategoryItemCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            SizedBox(
-              height: 150,
-              width: double.infinity,
-              child: Image.asset(
-                'assets/images/default.png',
-                fit: BoxFit.cover,
+            Hero(
+              tag: "${item.name}-${item.id}",
+
+              child: SizedBox(
+                height: 150,
+                width: double.infinity,
+                child: Image.asset(
+                  'assets/images/default.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Positioned(
               bottom: 10,
               left: 10,
               right: 10,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Text(
-                    item.name,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "${item.material} · ${item.length}m · ${item.stock} units",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.grey,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "${item.material} · ${item.length}m · ${item.stock} units",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
+                  IconButton.filled(
+                    style: IconButton.styleFrom(
+                      backgroundColor: AppColors.white.withOpacity(0.1),
+                    ),
+                    onPressed: () {},
+                    icon: SvgPicture.asset('assets/icons/similar.svg'),
                   ),
                 ],
               ),

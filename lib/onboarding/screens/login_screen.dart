@@ -85,10 +85,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
 
                           // Store the session token if needed
-                          final String? accessToken = session.accessToken;
+                          final String accessToken = session.accessToken;
                           final String? refreshToken = session.refreshToken;
 
-                          if (accessToken == null || refreshToken == null) {
+                          if (refreshToken == null) {
                             throw Exception('Login failed - missing tokens');
                           }
 

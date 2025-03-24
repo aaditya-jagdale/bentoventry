@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:textile/home/screens/new_item_screen.dart';
 import 'package:textile/home/widgets/category_item_card.dart';
+import 'package:textile/modules/shared/widgets/transitions.dart';
 import 'package:textile/riverpod/categories_rvpd.dart';
 import 'package:textile/riverpod/category_items_rvpd.dart';
 import 'package:textile/home/widgets/category_empty_state.dart';
@@ -61,6 +63,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          upSlideTransition(context, const NewItemScreen());
+        },
+        backgroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        child: Icon(Icons.add),
       ),
       body:
           _isLoading
