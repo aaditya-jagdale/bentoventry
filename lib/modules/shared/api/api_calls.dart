@@ -65,9 +65,9 @@ abstract final class ApiCalls {
     return res.map((item) => CategoryItemModel.fromJson(item)).toList();
   }
 
-  // static Future<void> createCategoryItem(CategoryItemModel item) async {
-  //   await supabase.from('category_items').insert({
-
-  //   });
-  // }
+  static Future<List<FileObject>> getCategoryItemImage(int itemId) async {
+    final List<FileObject> images =
+        await supabase.storage.from('${user.id}/$itemId').list();
+    return images;
+  }
 }

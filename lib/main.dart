@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.blackbg,
           textTheme: GoogleFonts.instrumentSansTextTheme(
-            Typography.whiteCupertino
+            Typography.whiteCupertino,
           ),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           textSelectionTheme: const TextSelectionThemeData(
@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
           ),
           appBarTheme: AppBarTheme(
             backgroundColor: AppColors.blackbg,
+            foregroundColor: AppColors.white,
             titleTextStyle: GoogleFonts.instrumentSans(
               color: AppColors.white,
               fontSize: 24,

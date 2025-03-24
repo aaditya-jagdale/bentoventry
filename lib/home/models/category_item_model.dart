@@ -13,6 +13,8 @@ abstract class CategoryItemModel with _$CategoryItemModel {
     @Default('') String type,
     @Default(0) int gsm,
     @Default(0) int price_per_unit,
+    @Default(0) int length,
+    @Default(0) int stock,
     @Default('') String created_at,
     @Default([]) List<String> search_tags,
     @Default(0) int category,

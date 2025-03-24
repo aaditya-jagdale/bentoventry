@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:textile/modules/shared/widgets/custom_progress_indicator.dart';
+import 'package:textile/home/widgets/category_item_card.dart';
 import 'package:textile/riverpod/categories_rvpd.dart';
 import 'package:textile/riverpod/category_items_rvpd.dart';
 import 'package:textile/home/widgets/category_empty_state.dart';
@@ -148,8 +148,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     if (ref.watch(categoriesProvider).categories.isNotEmpty)
                       Container(
-                        height: 50,
-                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        height: 55,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -269,16 +269,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             stopwatch.stop();
                           },
                           child: ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics(),
                             ),
                             itemCount: ref.watch(categoryItemsProvider).length,
                             itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                  ref.watch(categoryItemsProvider)[index].name,
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                              return CategoryItemCard(
+                                item: ref.watch(categoryItemsProvider)[index],
                               );
                             },
                           ),

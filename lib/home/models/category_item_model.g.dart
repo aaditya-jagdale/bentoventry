@@ -15,6 +15,8 @@ _CategoryItemModel _$CategoryItemModelFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String? ?? '',
       gsm: (json['gsm'] as num?)?.toInt() ?? 0,
       price_per_unit: (json['price_per_unit'] as num?)?.toInt() ?? 0,
+      length: (json['length'] as num?)?.toInt() ?? 0,
+      stock: (json['stock'] as num?)?.toInt() ?? 0,
       created_at: json['created_at'] as String? ?? '',
       search_tags:
           (json['search_tags'] as List<dynamic>?)
@@ -34,6 +36,8 @@ Map<String, dynamic> _$CategoryItemModelToJson(_CategoryItemModel instance) =>
       'type': instance.type,
       'gsm': instance.gsm,
       'price_per_unit': instance.price_per_unit,
+      'length': instance.length,
+      'stock': instance.stock,
       'created_at': instance.created_at,
       'search_tags': instance.search_tags,
       'category': instance.category,
