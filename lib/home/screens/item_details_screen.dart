@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:textile/home/models/category_item_model.dart';
 import 'package:textile/home/widgets/item_list_tile.dart';
 import 'package:textile/modules/shared/widgets/colors.dart';
@@ -16,15 +17,64 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Hero(
-              tag: "${widget.item.name}-${widget.item.id}",
-              child: Image.asset('assets/images/default.png'),
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+
+              child: Stack(
+                children: [
+                  Hero(
+                    tag: "${widget.item.name}-${widget.item.id}",
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => PhotoView(
+                                  maxScale: 1.5,
+                                  minScale: 1.0,
+                                  imageProvider: AssetImage(
+                                    'assets/images/default.png',
+                                  ),
+                                ),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        height: 300,
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/images/default.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: MediaQuery.of(context).padding.top + 10,
+                    left: 10,
+                    // right: 10,
+                    child: IconButton(
+                      style: IconButton.styleFrom(
+                        backgroundColor: AppColors.white.withOpacity(0.1),
+                        shape: const CircleBorder(),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 10),
             Padding(
@@ -115,32 +165,50 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                         ItemListTile(
                           icon: 'assets/icons/pattern.svg',
                           title: 'Pattern',
-                          value: widget.item.pattern,
+                          value:
+                              widget.item.pattern.isEmpty
+                                  ? '-'
+                                  : widget.item.pattern,
                         ),
                         ItemListTile(
                           icon: 'assets/icons/stack.svg',
                           title: 'Material',
-                          value: widget.item.material,
+                          value:
+                              widget.item.material.isEmpty
+                                  ? '-'
+                                  : widget.item.material,
                         ),
                         ItemListTile(
                           icon: 'assets/icons/weight.svg',
                           title: 'Weight',
-                          value: '${widget.item.gsm} gsm',
+                          value:
+                              widget.item.gsm == 0
+                                  ? '-'
+                                  : '${widget.item.gsm} gsm',
                         ),
                         ItemListTile(
                           icon: 'assets/icons/width.svg',
                           title: 'Length',
-                          value: "${widget.item.length}m",
+                          value:
+                              widget.item.length == 0
+                                  ? '-'
+                                  : "${widget.item.length}m",
                         ),
                         ItemListTile(
                           icon: 'assets/icons/hash.svg',
                           title: 'Stock',
-                          value: '${widget.item.stock} units',
+                          value:
+                              widget.item.stock == 0
+                                  ? '-'
+                                  : '${widget.item.stock} units',
                         ),
                         ItemListTile(
                           icon: 'assets/icons/rupee.svg',
                           title: 'Price',
-                          value: '₹${widget.item.price_per_unit}/m²',
+                          value:
+                              widget.item.price_per_unit == 0
+                                  ? '-'
+                                  : '₹${widget.item.price_per_unit}/m²',
                           line: false,
                         ),
                       ],

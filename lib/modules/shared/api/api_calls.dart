@@ -40,10 +40,13 @@ abstract final class ApiCalls {
     return res.map((category) => CategoryModel.fromJson(category)).toList();
   }
 
-  static Future<void> createCategory(String categoryName) async {
+  static Future<void> createCategory(String categoryName, int orgId) async {
     await supabase.from('categories').insert({
       'user_id': user.id,
-      'category_name': categoryName,
+      'category_name':
+          categoryName[0].toUpperCase() +
+          categoryName.substring(1).toLowerCase(),
+      'organization': orgId,
     });
   }
 
@@ -69,5 +72,63 @@ abstract final class ApiCalls {
     final List<FileObject> images =
         await supabase.storage.from('${user.id}/$itemId').list();
     return images;
+  }
+
+  static Future<List<CategoryItemModel>> filteredItems({
+    required int orgId,
+    required String column,
+    required String value,
+  }) async {
+    final res = await supabase
+        .from('category_items')
+        .select('*')
+        .eq('organization_id', orgId)
+        .ilike(column, "%$value%");
+    return res.map((item) => CategoryItemModel.fromJson(item)).toList();
+  }
+
+  static Future<List<CategoryItemModel>> filteredQtyItems({
+    required int orgId,
+    required String column,
+    required int value,
+    int range = 25,
+  }) async {
+    final res = await supabase
+        .from('category_items')
+        .select('*')
+        .eq('organization_id', orgId)
+        .eq(column, value);
+    return res.map((item) => CategoryItemModel.fromJson(item)).toList();
+  }
+
+  static Future<void> createCategoryItem(
+    CategoryItemModel item,
+    int orgId,
+  ) async {
+    await supabase.from('category_items').insert({
+      'category': item.category,
+      'organization_id': orgId,
+      'name': item.name,
+      'material':
+          (item.material[0].toUpperCase() +
+                  item.material.substring(1).toLowerCase())
+              .trim(),
+      'pattern':
+          (item.pattern[0].toUpperCase() +
+                  item.pattern.substring(1).toLowerCase())
+              .trim(),
+      'type': item.type,
+      'gsm': item.gsm,
+      'length': item.length,
+      'stock': item.stock,
+      'price_per_unit': item.price_per_unit,
+    });
+  }
+
+  static Future<void> updateCategoryName(int categoryId, String newName) async {
+    await supabase
+        .from('categories')
+        .update({'category_name': newName})
+        .eq('id', categoryId);
   }
 }

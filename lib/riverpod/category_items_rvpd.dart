@@ -15,6 +15,7 @@ class CategoryItemsNotifier extends StateNotifier<List<CategoryItemModel>> {
   Future<void> loadCategoryItems(int categoryId) async {
     final items = await ApiCalls.getCategoryItems(categoryId);
     state = items;
+    print("loaded category items: $state");
   }
 
   Future<void> loadAllItems(int orgId) async {

@@ -4,6 +4,7 @@ void rightSlideTransition(
   BuildContext context,
   Widget page, {
   Duration duration = const Duration(milliseconds: 500),
+  Function()? onComplete,
 }) {
   Navigator.push(
     context,
@@ -16,8 +17,10 @@ void rightSlideTransition(
         const end = Offset.zero;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
 
         var offsetAnimation = animation.drive(tween);
 
@@ -25,7 +28,9 @@ void rightSlideTransition(
       },
       transitionDuration: duration,
     ),
-  );
+  ).then((_) {
+    onComplete?.call();
+  });
 }
 
 void upSlideTransition(
@@ -45,8 +50,10 @@ void upSlideTransition(
         const end = Offset.zero;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
 
         var offsetAnimation = animation.drive(tween);
 
@@ -75,8 +82,10 @@ void leftSlideTransition(
         const end = Offset.zero;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
 
         var offsetAnimation = animation.drive(tween);
 
@@ -103,8 +112,10 @@ void downSlideTransition(
         const end = Offset.zero;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
 
         var offsetAnimation = animation.drive(tween);
 
@@ -131,8 +142,10 @@ void scaleUpTransition(
         const end = 1.0;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
 
         var offsetAnimation = animation.drive(tween);
 
@@ -159,8 +172,10 @@ void fadeTransition(
         const end = 1.0;
         const curve = Curves.easeInOutCubic;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
 
         var offsetAnimation = animation.drive(tween);
 

@@ -31,10 +31,21 @@ class CustomDropdown extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
+          focusColor: AppColors.greyBg,
           value: controller.text.isNotEmpty ? controller.text : null,
           decoration: InputDecoration(
             prefixIcon: prefixIcon,
             hintText: hint,
+            filled: true,
+            fillColor: AppColors.greyBg,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(16),
+            ),
             hintStyle: TextStyle(
               color: errorText ? AppColors.danger : AppColors.grey,
               fontWeight: FontWeight.normal,
@@ -45,6 +56,8 @@ class CustomDropdown extends StatelessWidget {
               ),
             ),
           ),
+          dropdownColor: AppColors.black,
+
           icon: const Icon(Icons.keyboard_arrow_down_rounded),
           items:
               items.map((String item) {

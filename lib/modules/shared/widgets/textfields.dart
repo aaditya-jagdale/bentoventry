@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Function()? onTap;
   final Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
@@ -25,12 +26,13 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.onTap,
     this.onChanged,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,13 +46,14 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          TextField(
+          TextFormField(
             onTap: onTap,
             onChanged: onChanged,
             enabled: enabled,
             controller: controller,
             obscureText: isPassword,
             keyboardType: keyboardType,
+            validator: validator,
             style: TextStyle(color: AppColors.white, fontSize: 16),
             decoration: InputDecoration(
               fillColor: AppColors.greyBg,
@@ -66,13 +69,21 @@ class CustomTextField extends StatelessWidget {
                 borderSide: BorderSide(color: AppColors.grey),
                 borderRadius: BorderRadius.circular(16),
               ),
-              contentPadding: EdgeInsets.all(16),
+              contentPadding: const EdgeInsets.all(16),
               enabledBorder: OutlineInputBorder(
-                // borderSide: BorderSide(color: AppColors.grey),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(16),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.grey),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
                 borderRadius: BorderRadius.circular(16),
               ),
             ),

@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:textile/modules/shared/api/api_calls.dart';
 import 'package:textile/modules/shared/screens/splash_screen.dart';
 import 'package:textile/modules/shared/widgets/buttons.dart';
 import 'package:textile/modules/shared/widgets/colors.dart';
 import 'package:textile/modules/shared/widgets/custom_progress_indicator.dart';
 import 'package:textile/modules/shared/widgets/transitions.dart';
+import 'package:textile/riverpod/user_org_rvpd.dart';
 
-class NewCategoryScreen extends StatefulWidget {
+class NewCategoryScreen extends ConsumerStatefulWidget {
   const NewCategoryScreen({super.key});
 
   @override
-  State<NewCategoryScreen> createState() => _NewCategoryScreenState();
+  ConsumerState<NewCategoryScreen> createState() => _NewCategoryScreenState();
 }
 
-class _NewCategoryScreenState extends State<NewCategoryScreen> {
+class _NewCategoryScreenState extends ConsumerState<NewCategoryScreen> {
   final controller = TextEditingController();
   bool _showError = false;
   bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +41,7 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
             TextField(
               controller: controller,
               textAlign: TextAlign.center,
+              keyboardType: TextInputType.name,
               style: TextStyle(color: AppColors.white, fontSize: 16),
               decoration: InputDecoration(
                 fillColor: AppColors.greyBg,
@@ -80,7 +82,9 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
                     _showError = true;
                   });
                   if (controller.text.isNotEmpty) {
-                    ApiCalls.createCategory(controller.text).then((_) {
+                    int orgId = ref.read(userOrgProvider)!.id;
+
+                    ApiCalls.createCategory(controller.text, orgId).then((_) {
                       setState(() {
                         _isLoading = false;
                       });

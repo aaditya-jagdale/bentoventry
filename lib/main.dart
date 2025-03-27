@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             foregroundColor: AppColors.white,
             titleTextStyle: GoogleFonts.instrumentSans(
               color: AppColors.white,
-              fontSize: 24,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
