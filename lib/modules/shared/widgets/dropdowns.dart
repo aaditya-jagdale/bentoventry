@@ -31,13 +31,17 @@ class CustomDropdown extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
-          focusColor: AppColors.greyBg,
+          focusColor: AppTheme.currentTheme.colorScheme.secondary.withOpacity(
+            0.2,
+          ),
           value: controller.text.isNotEmpty ? controller.text : null,
           decoration: InputDecoration(
             prefixIcon: prefixIcon,
             hintText: hint,
             filled: true,
-            fillColor: AppColors.greyBg,
+            fillColor: AppTheme.currentTheme.colorScheme.secondary.withOpacity(
+              0.2,
+            ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.transparent),
               borderRadius: BorderRadius.circular(16),
@@ -47,16 +51,22 @@ class CustomDropdown extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             hintStyle: TextStyle(
-              color: errorText ? AppColors.danger : AppColors.grey,
+              color:
+                  errorText
+                      ? AppTheme.currentTheme.colorScheme.error
+                      : AppTheme.currentTheme.colorScheme.tertiary,
               fontWeight: FontWeight.normal,
             ),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: errorText ? AppColors.danger : AppColors.black,
+                color:
+                    errorText
+                        ? AppTheme.currentTheme.colorScheme.error
+                        : AppTheme.currentTheme.colorScheme.primary,
               ),
             ),
           ),
-          dropdownColor: AppColors.black,
+          dropdownColor: AppTheme.currentTheme.colorScheme.primary,
 
           icon: const Icon(Icons.keyboard_arrow_down_rounded),
           items:

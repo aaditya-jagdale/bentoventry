@@ -24,7 +24,7 @@ class _NewCategoryScreenState extends ConsumerState<NewCategoryScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.white),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
@@ -42,30 +42,40 @@ class _NewCategoryScreenState extends ConsumerState<NewCategoryScreen> {
               controller: controller,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.name,
-              style: TextStyle(color: AppColors.white, fontSize: 16),
+              style: TextStyle(
+                color: AppTheme.currentTheme.colorScheme.primary,
+                fontSize: 16,
+              ),
               decoration: InputDecoration(
-                fillColor: AppColors.greyBg,
                 errorText:
                     _showError && controller.text.isEmpty
                         ? 'Please enter a valid category name'
                         : null,
                 hintText: 'Category Name',
                 hintStyle: TextStyle(
-                  color: AppColors.grey.withOpacity(0.5),
+                  color: AppTheme.currentTheme.colorScheme.tertiary.withOpacity(
+                    0.5,
+                  ),
                   fontWeight: FontWeight.normal,
                 ),
                 filled: true,
+                fillColor: AppTheme.currentTheme.colorScheme.primary
+                    .withOpacity(0.2),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey),
+                  borderSide: BorderSide(
+                    color: AppTheme.currentTheme.colorScheme.tertiary,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 contentPadding: EdgeInsets.all(16),
                 enabledBorder: OutlineInputBorder(
-                  // borderSide: BorderSide(color: AppColors.grey),
+                  // borderSide: BorderSide(color: AppTheme.currentTheme.colorScheme.tertiary),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey),
+                  borderSide: BorderSide(
+                    color: AppTheme.currentTheme.colorScheme.tertiary,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),

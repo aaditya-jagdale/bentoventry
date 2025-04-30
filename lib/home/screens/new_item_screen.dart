@@ -108,9 +108,7 @@ class _NewItemScreenState extends ConsumerState<NewItemScreen> {
     final categories = ref.watch(categoriesProvider).categories;
 
     return Scaffold(
-      backgroundColor: AppColors.blackbg,
       appBar: AppBar(
-        backgroundColor: AppColors.blackbg,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [const Text('New Item')],
@@ -126,12 +124,12 @@ class _NewItemScreenState extends ConsumerState<NewItemScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Category',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: AppTheme.currentTheme.colorScheme.primary,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -140,14 +138,19 @@ class _NewItemScreenState extends ConsumerState<NewItemScreen> {
                         hint: Text(
                           'Select Category',
                           style: TextStyle(
-                            color: AppColors.grey,
+                            color: AppTheme.currentTheme.colorScheme.tertiary,
                             fontWeight: FontWeight.normal,
+                            fontSize: 16, // Match CustomTextField font size
                           ),
+                        ),
+                        style: TextStyle(
+                          color: AppTheme.currentTheme.colorScheme.primary,
+                          fontSize: 16, // Match CustomTextField font size
                         ),
                         decoration: InputDecoration(
                           filled: true,
-
-                          fillColor: AppColors.greyBg,
+                          fillColor: AppTheme.currentTheme.colorScheme.primary
+                              .withOpacity(0.2),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                               color: Colors.transparent,
@@ -161,14 +164,23 @@ class _NewItemScreenState extends ConsumerState<NewItemScreen> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        dropdownColor: AppColors.black,
+                        dropdownColor:
+                            AppTheme.currentTheme.colorScheme.secondary,
                         items:
                             categories.map((category) {
                               return DropdownMenuItem<CategoryModel>(
                                 value: category,
                                 child: Text(
                                   category.category_name,
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                    color:
+                                        AppTheme
+                                            .currentTheme
+                                            .colorScheme
+                                            .primary,
+                                    fontSize:
+                                        16, // Match CustomTextField font size
+                                  ),
                                 ),
                               );
                             }).toList(),
@@ -281,10 +293,11 @@ class _NewItemScreenState extends ConsumerState<NewItemScreen> {
                               ],
                             ),
                             const SizedBox(height: 20),
-                            const Text(
+                            Text(
                               'Photos (max 5)',
                               style: TextStyle(
-                                color: Colors.white,
+                                color:
+                                    AppTheme.currentTheme.colorScheme.primary,
                                 fontSize: 16,
                               ),
                             ),
@@ -293,12 +306,14 @@ class _NewItemScreenState extends ConsumerState<NewItemScreen> {
                               width: 100,
                               height: 100,
                               decoration: BoxDecoration(
-                                color: Colors.grey[900],
+                                color: AppTheme.currentTheme.colorScheme.primary
+                                    .withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.add,
-                                color: Colors.white,
+                                color:
+                                    AppTheme.currentTheme.colorScheme.primary,
                                 size: 32,
                               ),
                             ),
@@ -339,15 +354,23 @@ class _NewItemScreenState extends ConsumerState<NewItemScreen> {
                                 child: ElevatedButton(
                                   onPressed: _handleSubmit,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
+                                    backgroundColor:
+                                        AppTheme
+                                            .currentTheme
+                                            .colorScheme
+                                            .primary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Add Item',
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color:
+                                          AppTheme
+                                              .currentTheme
+                                              .colorScheme
+                                              .secondary,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                     ),

@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Function()? onTap;
   final Function(String)? onChanged;
+  
   final String? Function(String?)? validator;
 
   const CustomTextField({
@@ -42,7 +43,7 @@ class CustomTextField extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: AppColors.grey,
+              color: AppTheme.currentTheme.colorScheme.primary,
             ),
           ),
           const SizedBox(height: 4),
@@ -54,19 +55,28 @@ class CustomTextField extends StatelessWidget {
             obscureText: isPassword,
             keyboardType: keyboardType,
             validator: validator,
-            style: TextStyle(color: AppColors.white, fontSize: 16),
+            style: TextStyle(
+              color: AppTheme.currentTheme.colorScheme.primary,
+              fontSize: 16,
+            ),
             decoration: InputDecoration(
-              fillColor: AppColors.greyBg,
               errorText: errorText,
               hintText: hint,
               hintStyle: TextStyle(
-                color: AppColors.grey.withOpacity(0.5),
+                color: AppTheme.currentTheme.colorScheme.primary.withOpacity(
+                  0.5,
+                ),
                 fontWeight: FontWeight.normal,
               ),
               prefixIcon: prefixIcon,
               filled: true,
+              fillColor: AppTheme.currentTheme.colorScheme.primary.withOpacity(
+                0.2,
+              ),
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.grey),
+                borderSide: BorderSide(
+                  color: AppTheme.currentTheme.colorScheme.tertiary,
+                ),
                 borderRadius: BorderRadius.circular(16),
               ),
               contentPadding: const EdgeInsets.all(16),
@@ -75,7 +85,10 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.grey),
+                borderSide: BorderSide(
+                  width: 2,
+                  color: AppTheme.currentTheme.colorScheme.tertiary,
+                ),
                 borderRadius: BorderRadius.circular(16),
               ),
               errorBorder: OutlineInputBorder(

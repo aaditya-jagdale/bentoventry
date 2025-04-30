@@ -18,7 +18,7 @@
 //   Widget build(BuildContext context) {
 //     return Container(
 //       height: 70,
-//       color: AppColors.white,
+//       color: AppTheme.currentTheme.colorScheme.secondary,
 //       child: ClipRRect(
 //         borderRadius: BorderRadius.circular(0), // Optional: Rounded corners
 //         child: BackdropFilter(
@@ -54,8 +54,8 @@
 //             icon,
 //             colorFilter: ColorFilter.mode(
 //               ref.watch(navBarProvider) == index
-//                   ? AppColors.black
-//                   : AppColors.black25,
+//                   ? AppTheme.currentTheme.colorScheme.primary
+//                   : AppTheme.currentTheme.colorScheme.primary25,
 //               BlendMode.srcIn,
 //             ),
 //           ),

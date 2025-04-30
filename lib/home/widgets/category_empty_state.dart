@@ -11,24 +11,27 @@ class CategoryEmptyState extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(
+        Icon(
           Icons.add_circle_outline,
           size: 48,
-          color: AppColors.white30,
+          color: AppTheme.currentTheme.colorScheme.tertiary,
         ),
         const SizedBox(height: 16),
-        const Text(
+        Text(
           'No category found',
           style: TextStyle(
             fontSize: 16,
-            color: AppColors.white,
+            color: AppTheme.currentTheme.colorScheme.tertiary,
             fontWeight: FontWeight.w500,
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
+        Text(
           'Create a category to start adding items',
-          style: TextStyle(fontSize: 14, color: AppColors.grey),
+          style: TextStyle(
+            fontSize: 14,
+            color: AppTheme.currentTheme.colorScheme.tertiary,
+          ),
         ),
         const SizedBox(height: 24),
         ElevatedButton(
@@ -36,8 +39,8 @@ class CategoryEmptyState extends StatelessWidget {
             rightSlideTransition(context, const NewCategoryScreen());
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.white,
-            foregroundColor: AppColors.black,
+            backgroundColor: AppTheme.currentTheme.colorScheme.secondary,
+            foregroundColor: AppTheme.currentTheme.colorScheme.primary,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           ),
           child: const Text(

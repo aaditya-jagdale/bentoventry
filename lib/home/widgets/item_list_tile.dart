@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:textile/modules/shared/widgets/colors.dart';
 
 class ItemListTile extends StatelessWidget {
   final String icon;
@@ -27,18 +28,37 @@ class ItemListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SvgPicture.asset(icon),
+              SvgPicture.asset(
+                icon,
+                colorFilter: ColorFilter.mode(
+                  AppTheme.currentTheme.colorScheme.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
               const SizedBox(width: 10),
-              Text(title),
+              Text(
+                title,
+                style: TextStyle(
+                  color: AppTheme.currentTheme.colorScheme.primary,
+                ),
+              ),
               const Spacer(),
-              Text(value),
+              Text(
+                value,
+                style: TextStyle(
+                  color: AppTheme.currentTheme.colorScheme.primary,
+                ),
+              ),
             ],
           ),
         ),
         if (line)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: DottedLine(dashColor: Color(0XFF898989), dashGapLength: 6),
+            child: DottedLine(
+              dashColor: AppTheme.currentTheme.colorScheme.tertiary,
+              dashGapLength: 6,
+            ),
           ),
       ],
     );

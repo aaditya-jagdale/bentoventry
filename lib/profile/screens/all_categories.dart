@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:textile/home/models/cateogory_model.dart';
 import 'package:textile/modules/shared/api/api_calls.dart';
 import 'package:textile/modules/shared/widgets/colors.dart';
+import 'package:textile/modules/shared/widgets/textfields.dart';
 import 'package:textile/riverpod/categories_rvpd.dart';
 import 'package:textile/riverpod/user_org_rvpd.dart';
 
@@ -22,7 +23,7 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
 
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppColors.greyBg,
+      backgroundColor: AppTheme.currentTheme.colorScheme.secondary,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -37,33 +38,43 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Edit Category',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppTheme.currentTheme.colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextField(
+                // TextField(
+                //   controller: controller,
+                //   autofocus: true,
+                //   style: TextStyle(
+                //     color: AppTheme.currentTheme.colorScheme.secondary,
+                //   ),
+                //   decoration: InputDecoration(
+                //     hintText: 'Category name',
+                //     hintStyle: TextStyle(
+                //       color: AppTheme.currentTheme.colorScheme.tertiary,
+                //     ),
+                //     enabledBorder: OutlineInputBorder(
+                //       borderSide: BorderSide(
+                //         color: AppTheme.currentTheme.colorScheme.tertiary,
+                //       ),
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     focusedBorder: OutlineInputBorder(
+                //       borderSide: const BorderSide(color: Colors.white),
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //   ),
+                // ),
+                CustomTextField(
                   controller: controller,
-                  autofocus: true,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    hintText: 'Category name',
-                    hintStyle: TextStyle(color: AppColors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                  title: '',
+                  hint: 'Category name',
                 ),
-                const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -107,7 +118,7 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('All Categories')),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.white,
+        backgroundColor: AppTheme.currentTheme.colorScheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         onPressed: () {
           _editCategoryBottomSheet(null);
@@ -124,9 +135,15 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
             },
             title: Text(
               category.category_name,
-              style: const TextStyle(fontSize: 16, color: Colors.white),
+              style: TextStyle(
+                fontSize: 16,
+                color: AppTheme.currentTheme.colorScheme.primary,
+              ),
             ),
-            trailing: Icon(Icons.mode_edit_outlined, color: AppColors.grey),
+            trailing: Icon(
+              Icons.mode_edit_outlined,
+              color: AppTheme.currentTheme.colorScheme.tertiary,
+            ),
           );
         },
       ),

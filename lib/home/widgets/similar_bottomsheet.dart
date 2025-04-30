@@ -14,8 +14,8 @@ class SimilarBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: AppTheme.currentTheme.colorScheme.secondary,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),
@@ -25,12 +25,12 @@ class SimilarBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Find similar:',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Colors.black,
+              color: AppTheme.currentTheme.colorScheme.primary,
             ),
           ),
           const SizedBox(height: 10),
@@ -98,7 +98,10 @@ class SimilarBottomSheet extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Row(
               children: [
-                SvgPicture.asset(icon, color: Colors.black),
+                SvgPicture.asset(
+                  icon,
+                  color: AppTheme.currentTheme.colorScheme.primary,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Row(
@@ -106,15 +109,15 @@ class SimilarBottomSheet extends StatelessWidget {
                     children: [
                       Text(
                         label,
-                        style: const TextStyle(
-                          color: Colors.black,
+                        style: TextStyle(
+                          color: AppTheme.currentTheme.colorScheme.primary,
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         value,
-                        style: const TextStyle(
-                          color: Colors.black38,
+                        style: TextStyle(
+                          color: AppTheme.currentTheme.colorScheme.primary,
                           fontSize: 14,
                         ),
                       ),
@@ -124,7 +127,8 @@ class SimilarBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          if (showLine) DottedLine(dashColor: AppColors.grey),
+          if (showLine)
+            DottedLine(dashColor: AppTheme.currentTheme.colorScheme.tertiary),
         ],
       ),
     );

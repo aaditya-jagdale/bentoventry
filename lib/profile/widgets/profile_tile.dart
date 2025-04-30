@@ -17,26 +17,39 @@ class ProfileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColors.greyBg,
-          borderRadius: BorderRadius.circular(10),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
           children: [
             SvgPicture.asset(
               icon,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
+              colorFilter: ColorFilter.mode(
+                title == 'Logout'
+                    ? AppTheme.currentTheme.colorScheme.error
+                    : AppTheme.currentTheme.colorScheme.primary,
                 BlendMode.srcIn,
               ),
             ),
             const SizedBox(width: 10),
-            Expanded(child: Text(title)),
-            const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color:
+                      title == 'Logout'
+                          ? AppTheme.currentTheme.colorScheme.error
+                          : AppTheme.currentTheme.colorScheme.primary,
+                ),
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              color:
+                  title == 'Logout'
+                      ? AppTheme.currentTheme.colorScheme.error
+                      : AppTheme.currentTheme.colorScheme.primary,
+              size: 16,
+            ),
           ],
         ),
       ),

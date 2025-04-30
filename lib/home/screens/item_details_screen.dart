@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:textile/home/models/category_item_model.dart';
 import 'package:textile/home/widgets/item_list_tile.dart';
+import 'package:textile/modules/shared/api/api_calls.dart';
 import 'package:textile/modules/shared/widgets/colors.dart';
+import 'package:textile/modules/shared/widgets/custom_progress_indicator.dart';
+import 'package:textile/riverpod/favorite_items.dart';
 
-class ItemDetailsScreen extends StatefulWidget {
+class ItemDetailsScreen extends ConsumerStatefulWidget {
   final CategoryItemModel item;
   const ItemDetailsScreen({super.key, required this.item});
 
   @override
-  State<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
+  ConsumerState<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
 }
 
-class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
+class _ItemDetailsScreenState extends ConsumerState<ItemDetailsScreen> {
+  bool _favLoading = false;
+  String? imageUrl;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      imageUrl = await ApiCalls.getImageUrl(widget.item.image);
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +54,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                                 (context) => PhotoView(
                                   maxScale: 1.5,
                                   minScale: 1.0,
-                                  imageProvider: AssetImage(
-                                    'assets/images/default.png',
-                                  ),
+                                  imageProvider: NetworkImage(imageUrl!),
                                 ),
                           ),
                         );
@@ -48,9 +62,32 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                       child: SizedBox(
                         height: 300,
                         width: double.infinity,
-                        child: Image.asset(
-                          'assets/images/default.png',
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl!,
                           fit: BoxFit.cover,
+                          placeholder:
+                              (context, url) => Center(
+                                child: SizedBox(
+                                  height: 24,
+                                  width: 24,
+                                  child: CircularProgressIndicator(
+                                    color:
+                                        AppTheme
+                                            .currentTheme
+                                            .colorScheme
+                                            .primary,
+                                    strokeWidth: 2,
+                                  ),
+                                ),
+                              ),
+                          errorWidget:
+                              (context, url, error) => Center(
+                                child: Icon(
+                                  Icons.error_outline,
+                                  color:
+                                      AppTheme.currentTheme.colorScheme.error,
+                                ),
+                              ),
                         ),
                       ),
                     ),
@@ -61,15 +98,19 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                     // right: 10,
                     child: IconButton(
                       style: IconButton.styleFrom(
-                        backgroundColor: AppColors.white.withOpacity(0.1),
+                        backgroundColor: AppTheme
+                            .currentTheme
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.2),
                         shape: const CircleBorder(),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_back,
-                        color: AppColors.white,
+                        color: AppTheme.currentTheme.colorScheme.primary,
                       ),
                     ),
                   ),
@@ -85,9 +126,52 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                   const SizedBox(height: 10),
 
                   //Item name
-                  Text(
-                    widget.item.name,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.item.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.currentTheme.colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      IconButton(
+                        onPressed: () async {
+                          setState(() {
+                            _favLoading = true;
+                          });
+                          await ref
+                              .read(favoriteItemsProvider.notifier)
+                              .toggleFavorite(widget.item);
+                          setState(() {
+                            _favLoading = false;
+                          });
+                        },
+                        icon:
+                            _favLoading
+                                ? const CustomProgressIndicator()
+                                : ref
+                                    .watch(favoriteItemsProvider)
+                                    .items
+                                    .any(
+                                      (element) => element.id == widget.item.id,
+                                    )
+                                ? Icon(
+                                  Icons.favorite,
+                                  color:
+                                      AppTheme.currentTheme.colorScheme.error,
+                                )
+                                : Icon(
+                                  Icons.favorite_border,
+                                  color:
+                                      AppTheme.currentTheme.colorScheme.primary,
+                                ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   //Similar and favourite button
@@ -98,7 +182,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                         Expanded(
                           child: TextButton(
                             style: TextButton.styleFrom(
-                              backgroundColor: AppColors.white.withOpacity(0.1),
+                              backgroundColor: AppTheme
+                                  .currentTheme
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.2),
                               minimumSize: Size(double.infinity, 50),
                             ),
                             onPressed: () {},
@@ -106,13 +194,23 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SvgPicture.asset('assets/icons/similar.svg'),
+                                SvgPicture.asset(
+                                  'assets/icons/similar.svg',
+                                  colorFilter: ColorFilter.mode(
+                                    AppTheme.currentTheme.colorScheme.primary,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
                                 const SizedBox(width: 5),
                                 Text(
                                   'Similar',
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.white,
+                                    color:
+                                        AppTheme
+                                            .currentTheme
+                                            .colorScheme
+                                            .primary,
                                   ),
                                 ),
                               ],
@@ -123,7 +221,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                         Expanded(
                           child: TextButton(
                             style: TextButton.styleFrom(
-                              backgroundColor: AppColors.white.withOpacity(0.1),
+                              backgroundColor: AppTheme
+                                  .currentTheme
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.2),
                               minimumSize: Size(double.infinity, 50),
                             ),
                             onPressed: () {},
@@ -131,16 +233,23 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.white,
+                                SvgPicture.asset(
+                                  'assets/icons/camera_lens.svg',
+                                  colorFilter: ColorFilter.mode(
+                                    AppTheme.currentTheme.colorScheme.primary,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
-                                  'Favourite',
+                                  'Image Search',
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.white,
+                                    color:
+                                        AppTheme
+                                            .currentTheme
+                                            .colorScheme
+                                            .primary,
                                   ),
                                 ),
                               ],
@@ -155,9 +264,19 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 6,
+                    ),
                     decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.1),
+                      color: AppTheme.currentTheme.colorScheme.secondary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.currentTheme.colorScheme.tertiary
+                              .withOpacity(0.25),
+                          blurRadius: 10,
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(

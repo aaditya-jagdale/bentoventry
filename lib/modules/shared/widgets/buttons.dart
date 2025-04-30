@@ -83,7 +83,7 @@ class GhostButton extends StatefulWidget {
     this.textAlign,
     this.textStyle = const TextStyle(
       fontSize: 18,
-      color: AppColors.white,
+      color: AppColors.black,
       fontWeight: FontWeight.normal,
     ),
     this.icon = const SizedBox(),
@@ -103,11 +103,11 @@ class _GhostButtonState extends State<GhostButton> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          backgroundColor: AppColors.black,
-          shadowColor: AppColors.black,
+          backgroundColor: AppTheme.currentTheme.colorScheme.primary,
+          shadowColor: AppTheme.currentTheme.colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
-            side: const BorderSide(color: AppColors.black),
+            side: BorderSide(color: AppTheme.currentTheme.colorScheme.primary),
           ),
         ),
         onPressed: widget.onPressed,
