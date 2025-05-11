@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:textile/home/models/user_org_model.dart';
 import 'package:textile/home/screens/home_screen.dart';
 import 'package:textile/modules/shared/api/api_calls.dart';
 import 'package:textile/modules/shared/widgets/colors.dart';
-import 'package:textile/modules/shared/widgets/custom_progress_indicator.dart';
 import 'package:textile/modules/shared/widgets/transitions.dart';
 import 'package:textile/onboarding/screens/user_organization_data.dart';
 import 'package:textile/riverpod/user_org_rvpd.dart';
@@ -18,6 +18,7 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   Future<void> getUserOrg() async {
+    await Future.delayed(const Duration(milliseconds: 500));
     final res = await ApiCalls.getUserOrg();
     if (res.isEmpty) {
       clearAllAndPush(context, const UserOrganizationData());
@@ -49,10 +50,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.white,
+                  color: AppTheme.currentTheme.colorScheme.primary,
                   shadows: [
                     Shadow(
-                      color: AppColors.white.withOpacity(0.25),
+                      color: AppTheme.currentTheme.colorScheme.primary
+                          .withOpacity(0.25),
                       blurRadius: 16,
                       offset: Offset(0, 2),
                     ),
@@ -64,10 +66,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
-                  color: AppColors.white,
+                  color: AppTheme.currentTheme.colorScheme.primary,
                   shadows: [
                     Shadow(
-                      color: AppColors.white.withOpacity(0.25),
+                      color: AppTheme.currentTheme.colorScheme.primary
+                          .withOpacity(0.25),
                       blurRadius: 16,
                       offset: Offset(0, 2),
                     ),
@@ -75,7 +78,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ),
               const SizedBox(height: 50),
-              CustomProgressIndicator(),
+              Lottie.asset('assets/lottie/forklift.json'),
             ],
           ),
         ),

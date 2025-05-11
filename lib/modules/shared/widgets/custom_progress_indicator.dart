@@ -3,7 +3,7 @@ import 'package:textile/modules/shared/widgets/colors.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
   final Color color;
-  const CustomProgressIndicator({super.key, this.color = AppColors.white});
+  const CustomProgressIndicator({super.key, this.color = AppColors.black});
 
   @override
   Widget build(BuildContext context) {

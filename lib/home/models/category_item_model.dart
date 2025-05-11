@@ -11,6 +11,7 @@ abstract class CategoryItemModel with _$CategoryItemModel {
     @Default('') String material,
     @Default('') String pattern,
     @Default('') String type,
+    @Default('') String image,
     @Default(0) int gsm,
     @Default(0) int price_per_unit,
     @Default(0) int length,

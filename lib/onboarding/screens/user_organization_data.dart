@@ -31,30 +31,39 @@ class _UserOrganizationDataState extends State<UserOrganizationData> {
             TextField(
               controller: controller,
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.white, fontSize: 16),
+              style: TextStyle(
+                color: AppTheme.currentTheme.colorScheme.secondary,
+                fontSize: 16,
+              ),
               decoration: InputDecoration(
-                fillColor: AppColors.greyBg,
+                fillColor: AppTheme.currentTheme.colorScheme.tertiary,
                 errorText:
                     _showError && controller.text.isEmpty
                         ? 'Please enter a valid organization name'
                         : null,
                 hintText: 'Organization Name',
                 hintStyle: TextStyle(
-                  color: AppColors.grey.withOpacity(0.5),
+                  color: AppTheme.currentTheme.colorScheme.tertiary.withOpacity(
+                    0.5,
+                  ),
                   fontWeight: FontWeight.normal,
                 ),
                 filled: true,
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey),
+                  borderSide: BorderSide(
+                    color: AppTheme.currentTheme.colorScheme.tertiary,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 contentPadding: EdgeInsets.all(16),
                 enabledBorder: OutlineInputBorder(
-                  // borderSide: BorderSide(color: AppColors.grey),
+                  // borderSide: BorderSide(color: AppTheme.currentTheme.colorScheme.tertiary),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey),
+                  borderSide: BorderSide(
+                    color: AppTheme.currentTheme.colorScheme.tertiary,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),

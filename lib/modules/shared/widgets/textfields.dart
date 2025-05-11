@@ -12,6 +12,8 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Function()? onTap;
   final Function(String)? onChanged;
+  
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
@@ -25,12 +27,13 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.onTap,
     this.onChanged,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,39 +43,60 @@ class CustomTextField extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: AppColors.grey,
+              color: AppTheme.currentTheme.colorScheme.primary,
             ),
           ),
           const SizedBox(height: 4),
-          TextField(
+          TextFormField(
             onTap: onTap,
             onChanged: onChanged,
             enabled: enabled,
             controller: controller,
             obscureText: isPassword,
             keyboardType: keyboardType,
-            style: TextStyle(color: AppColors.white, fontSize: 16),
+            validator: validator,
+            style: TextStyle(
+              color: AppTheme.currentTheme.colorScheme.primary,
+              fontSize: 16,
+            ),
             decoration: InputDecoration(
-              fillColor: AppColors.greyBg,
               errorText: errorText,
               hintText: hint,
               hintStyle: TextStyle(
-                color: AppColors.grey.withOpacity(0.5),
+                color: AppTheme.currentTheme.colorScheme.primary.withOpacity(
+                  0.5,
+                ),
                 fontWeight: FontWeight.normal,
               ),
               prefixIcon: prefixIcon,
               filled: true,
+              fillColor: AppTheme.currentTheme.colorScheme.primary.withOpacity(
+                0.2,
+              ),
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.grey),
+                borderSide: BorderSide(
+                  color: AppTheme.currentTheme.colorScheme.tertiary,
+                ),
                 borderRadius: BorderRadius.circular(16),
               ),
-              contentPadding: EdgeInsets.all(16),
+              contentPadding: const EdgeInsets.all(16),
               enabledBorder: OutlineInputBorder(
-                // borderSide: BorderSide(color: AppColors.grey),
+                borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(16),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.grey),
+                borderSide: BorderSide(
+                  width: 2,
+                  color: AppTheme.currentTheme.colorScheme.tertiary,
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
                 borderRadius: BorderRadius.circular(16),
               ),
             ),

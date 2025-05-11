@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:textile/modules/shared/api/api_calls.dart';
 import 'package:textile/modules/shared/screens/splash_screen.dart';
 import 'package:textile/modules/shared/widgets/buttons.dart';
 import 'package:textile/modules/shared/widgets/colors.dart';
 import 'package:textile/modules/shared/widgets/custom_progress_indicator.dart';
 import 'package:textile/modules/shared/widgets/transitions.dart';
+import 'package:textile/riverpod/user_org_rvpd.dart';
 
-class NewCategoryScreen extends StatefulWidget {
+class NewCategoryScreen extends ConsumerStatefulWidget {
   const NewCategoryScreen({super.key});
 
   @override
-  State<NewCategoryScreen> createState() => _NewCategoryScreenState();
+  ConsumerState<NewCategoryScreen> createState() => _NewCategoryScreenState();
 }
 
-class _NewCategoryScreenState extends State<NewCategoryScreen> {
+class _NewCategoryScreenState extends ConsumerState<NewCategoryScreen> {
   final controller = TextEditingController();
   bool _showError = false;
   bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.white),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
@@ -40,30 +41,41 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
             TextField(
               controller: controller,
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.white, fontSize: 16),
+              keyboardType: TextInputType.name,
+              style: TextStyle(
+                color: AppTheme.currentTheme.colorScheme.primary,
+                fontSize: 16,
+              ),
               decoration: InputDecoration(
-                fillColor: AppColors.greyBg,
                 errorText:
                     _showError && controller.text.isEmpty
                         ? 'Please enter a valid category name'
                         : null,
                 hintText: 'Category Name',
                 hintStyle: TextStyle(
-                  color: AppColors.grey.withOpacity(0.5),
+                  color: AppTheme.currentTheme.colorScheme.tertiary.withOpacity(
+                    0.5,
+                  ),
                   fontWeight: FontWeight.normal,
                 ),
                 filled: true,
+                fillColor: AppTheme.currentTheme.colorScheme.primary
+                    .withOpacity(0.2),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey),
+                  borderSide: BorderSide(
+                    color: AppTheme.currentTheme.colorScheme.tertiary,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 contentPadding: EdgeInsets.all(16),
                 enabledBorder: OutlineInputBorder(
-                  // borderSide: BorderSide(color: AppColors.grey),
+                  // borderSide: BorderSide(color: AppTheme.currentTheme.colorScheme.tertiary),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.grey),
+                  borderSide: BorderSide(
+                    color: AppTheme.currentTheme.colorScheme.tertiary,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
@@ -80,7 +92,9 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
                     _showError = true;
                   });
                   if (controller.text.isNotEmpty) {
-                    ApiCalls.createCategory(controller.text).then((_) {
+                    int orgId = ref.read(userOrgProvider)!.id;
+
+                    ApiCalls.createCategory(controller.text, orgId).then((_) {
                       setState(() {
                         _isLoading = false;
                       });
